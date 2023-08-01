@@ -25,28 +25,13 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 
+// custom commands:
 
-// Cypress.Commands.add('getIframeBody', () => {
-//     // get the iframe > document > body
-//     return cy
-//       .get('iframe[id="com.example.myapp__hello-world__bde5e06"]', { log: false })
-//       .its('0.contentDocument.body', { log: false })
-//       .should('not.be.empty')
-//       .then(cy.wrap);
-//   });
-  
+Cypress.Commands.add('getIframeBody', (iframeId) => {
+  return cy
+    .get(`#${iframeId}`, { log: false })
+    .its('0.contentDocument.body', { log: false })
+    .should('not.be.empty')
+    .then(cy.wrap);
+});
 
-Cypress.Commands.add('getIframeBody', () => {
-    // get the iframe > document > body
-    return cy
-      .get('iframe[id="com.example.myapp__hello-world__bde5e06"]', { log: false })
-      .should(($iframe) => {
-        // Check if the iframe has contentDocument and body
-        expect($iframe.contents().find('body')).to.exist;
-      })
-      .then(($iframe) => {
-        // Get the iframe body and return it
-        return cy.wrap($iframe.contents().find('body'), { log: false });
-      });
-  });
-  

@@ -1,58 +1,38 @@
-// import 'cypress-iframe';
-
-
-describe('template spec', () => {
-  it('passes', () => {
-    cy.visit('https://anamika-optimizory.atlassian.net/plugins/servlet/ac/com.example.myapp/hello-world?project.key=TNG32&project.id=10005');
-
-    // cy.iframe('iframe[id="com.example.myapp__hello-world__39a83a3a"]').within(() => {
-    //   cy.get('h1').should('have.text', 'Hello World');
-    // });
-
-
-    // Use the custom command to access the iframe content
-    cy.getIframeBody().then((iframeBody) => {
-      // Check if the "Hello World" text exists within the iframe content
-      cy.wrap(iframeBody).contains('Hello World').should('be.visible');
-    });
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
+// 1. directly check in iframe with id selector
 
 // describe('template spec', () => {
 //   it('passes', () => {
-//     cy.visit('https://anamika-optimizory.atlassian.net/plugins/servlet/upm');
-//     // cy.visit('https://anamika-optimizory.atlassian.net/plugins/servlet/ac/com.example.myapp/hello-world?project.key=TNG32&project.id=10005');
-//  cy.get('#username').type('anamika@optimizory.com')
-//  cy.get('#login-submit > .css-178ag6o').click()
-//  cy.get('#password').type('')
-//  cy.get('#login-submit > .css-178ag6o').click()
+//     cy.visit('http://localhost:1234/');
+//   });
 
+//   it('checks for text in iframe', () => {
+//     cy.wait(1000);
 
+//     // Select the first iframe with id "my-iframe-1"
+//     cy.get('#my-iframe-1').then(($iframe) => {
+//       const doc = $iframe.contents().get(0);
+//       cy.wrap(doc).find('h1').should('contain', 'Sample file');
+//     });
 
-//     cy.wait(5000);
-
-// // cy.origin('https://anamika-optimizory.atlassian.net', () => {
-//     cy.get('[data-testid="overflow-menu-trigger"]').click();
-
-
-//     // Use the custom command to access the iframe content
-//     // cy.getIframeBody().then((iframeBody) => {
-//     //   // Check if the "Hello World" text exists within the iframe content
-//     //   cy.wrap(iframeBody).contains('Hello World').should('be.visible');
+//     // Select the second iframe with id "my-iframe-2"
+//     // cy.get('#my-iframe-2').then(($iframe) => {
+//     //   const doc = $iframe.contents().get(0);
+//     //   cy.wrap(doc).find('h1').should('contain', 'Hello from example.com');
 //     // });
-//   // });
+//   });
 // });
 
-// });
+// 2. By using customm command 
 
+describe('template spec', () => {
+  it('passes', () => {
+    cy.visit('http://localhost:1234/');
+  });
+
+  it('checks for text in iframe', () => {
+    cy.wait(1000);
+
+    // Use the custom command to interact with the iframe
+    cy.getIframeBody('my-iframe-1').find('h1').should('contain', 'Sample file');
+  });
+});
